@@ -1,18 +1,19 @@
-<script></script>
+<script>
+import Menu from "./Menu.vue";
+export default {
+  components: {
+    Menu,
+  },
+};
+</script>
 
 <template>
   <div class="nav_container">
-    <i class="bi bi-caret-down"></i>
+    <button class="menu_button"><i class="bi bi-caret-down"></i></button>
     <h1>Trophy</h1>
-    <img src="/src/assets/images/trophy.png" alt="Trophy" />
+    <img src="/src/assets/images/trophies/trophy.png" alt="Trophy" />
   </div>
-  <div class="background_container">
-    <img
-      class="background_image"
-      src="/src/assets/images/trophy (1).png"
-      alt=""
-    />
-  </div>
+  <Menu />
 </template>
 
 <style>
@@ -22,6 +23,13 @@
   justify-content: space-between;
   height: 6vh;
   background-color: #107c10;
+}
+
+.menu_button {
+  height: 5vh;
+  background-color: #107c10;
+  border: none;
+  cursor: pointer;
 }
 i {
   font-size: 50px;
@@ -37,16 +45,5 @@ h1 {
 img {
   margin: 5px;
   height: 5vh;
-}
-.background_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 94vh;
-}
-.background_image {
-  align-items: center;
-  margin: 15px;
-  height: 45vh;
 }
 </style>
