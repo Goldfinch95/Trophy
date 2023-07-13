@@ -1,19 +1,32 @@
 <script>
 import Menu from "./Menu.vue";
+
 export default {
   components: {
     Menu,
+  },
+  data() {
+    return {
+      menuOpen: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
   },
 };
 </script>
 
 <template>
   <div class="nav_container">
-    <button class="menu_button"><i class="bi bi-caret-down"></i></button>
+    <button class="menu_button" @click="toggleMenu">
+      <i class="bi bi-caret-down"></i>
+      <Menu v-if="menuOpen" />
+    </button>
     <h1>Trophy</h1>
     <img src="/src/assets/images/trophies/trophy.png" alt="Trophy" />
   </div>
-  <Menu />
 </template>
 
 <style>
@@ -26,15 +39,15 @@ export default {
 }
 
 .menu_button {
-  height: 5vh;
+  height: 6vh;
+  width: 15%;
   background-color: #107c10;
   border: none;
   cursor: pointer;
 }
 i {
-  font-size: 50px;
+  font-size: 44px;
   color: #fff;
-  margin-left: 5px;
 }
 
 h1 {
@@ -45,5 +58,13 @@ h1 {
 img {
   margin: 5px;
   height: 5vh;
+}
+
+.menu {
+  display: none;
+}
+
+.menu.open {
+  display: flex;
 }
 </style>
