@@ -1,6 +1,7 @@
 <script>
 import Nav from "./components/Nav.vue";
 import Search from "./components/Search.vue";
+import { RouterView } from "vue-router";
 export default {
   components: {
     Nav,
@@ -12,13 +13,13 @@ export default {
 <template>
   <Nav />
   <Menu />
-  <Search />
   <div class="background_container">
-    <img
+    <!--<img
       class="background_image"
       src="/src/assets/images/trophies/trophy (1).png"
       alt=""
-    />
+    />-->
+    <RouterView></RouterView>
   </div>
 </template>
 

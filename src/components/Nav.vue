@@ -56,7 +56,7 @@ h1 {
 }
 
 img {
-  margin: 5px;
+  margin: 4px;
   height: 5vh;
 }
 
