@@ -13,23 +13,10 @@ export default {
 <template>
   <Nav />
   <Menu />
-  <div class="background_container">
-    <!--<img
-      class="background_image"
-      src="/src/assets/images/trophies/trophy (1).png"
-      alt=""
-    />-->
-    <RouterView></RouterView>
-  </div>
+  <RouterView></RouterView>
 </template>
 
 <style>
-.background_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-}
 .background_image {
   align-items: center;
   margin: 15px;
