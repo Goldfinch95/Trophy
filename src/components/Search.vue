@@ -76,13 +76,26 @@ export default {
           img: "src/assets/images/games/TheWitcher3.png",
         },
       ],
+      searchTerm: "",
     };
+  },
+  computed: {
+    filteredGames() {
+      return this.games.filter((game) =>
+        game.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    },
   },
 };
 </script>
 <template>
   <div class="search_container">
-    <input class="search" type="text" />
+    <input
+      class="search"
+      type="text"
+      v-model="searchTerm"
+      @input="filterGames"
+    />
     <img
       class="search_logo"
       src="/src/assets/images/search/search_logo.png"
@@ -91,7 +104,7 @@ export default {
   </div>
   <div class="games_container">
     <div class="frame">
-      <ul v-for="game in games" :key="game.name" class="game_item">
+      <ul v-for="game in filteredGames" :key="game.name" class="game_item">
         <img class="game_img" :src="game.img" alt="" />
       </ul>
     </div>
@@ -132,8 +145,8 @@ export default {
 .frame {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Divide en tres columnas */
-  gap: 10px; /* Espacio entre elementos */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   padding: 15px;
 }
 
