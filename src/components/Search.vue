@@ -77,6 +77,7 @@ export default {
         },
       ],
       searchTerm: "",
+      selectedGames: [],
     };
   },
   computed: {
@@ -88,8 +89,17 @@ export default {
   },
   methods: {
     addGameToTheList(game) {
+      this.selectedGames.push(game);
       console.log("se hizo clic en el juego", game);
+      console.log("Juegos seleccionados", this.selectedGames);
+      localStorage.setItem("selectedGames", JSON.stringify(this.selectedGames));
     },
+  },
+  mounted() {
+    const savedGames = localStorage.getItem("selectedGames");
+    if (savedGames) {
+      this.selectedGames = JSON.parse(savedGames);
+    }
   },
 };
 </script>
@@ -117,7 +127,7 @@ export default {
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .search_container {
   display: flex;
   justify-content: space-between;
@@ -147,6 +157,8 @@ export default {
   align-items: center;
   height: auto;
   height: 100vh;
+  margin: 20px;
+  margin-left: 10px;
 }
 
 .frame {
@@ -154,7 +166,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-right: 6px;
 }
 
 .game_button {

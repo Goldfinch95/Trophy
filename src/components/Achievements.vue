@@ -1,5 +1,5 @@
 <script></script>
 <template>
-  <h1>Logros</h1>
+  <h1>Achievements</h1>
 </template>
 <style></style>

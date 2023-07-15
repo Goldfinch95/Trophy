@@ -18,6 +18,7 @@ const routes = [
   {
     path: "/Achievements",
     component: Achievements,
+    name: "Achievements",
   },
 ];
 
