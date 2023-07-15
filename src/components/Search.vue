@@ -86,6 +86,11 @@ export default {
       );
     },
   },
+  methods: {
+    addGameToTheList(game) {
+      console.log("se hizo clic en el juego", game);
+    },
+  },
 };
 </script>
 <template>
@@ -105,7 +110,9 @@ export default {
   <div class="games_container">
     <div class="frame">
       <ul v-for="game in filteredGames" :key="game.name" class="game_item">
-        <img class="game_img" :src="game.img" alt="" />
+        <button class="game_button" @click="addGameToTheList(game)">
+          <img class="game_img" :src="game.img" alt="" />
+        </button>
       </ul>
     </div>
   </div>
@@ -147,7 +154,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  padding: 15px;
+  margin-right: 6px;
+}
+
+.game_button {
+  border: none;
+  background: none;
 }
 
 .game_item {
@@ -155,7 +167,8 @@ export default {
 }
 
 .game_img {
-  height: auto;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
