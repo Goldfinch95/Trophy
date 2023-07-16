@@ -3,7 +3,30 @@ export default {
   data() {
     return {
       achievements: [],
+      trophyCount: 0,
+      ghostTrophy: 0,
     };
+  },
+  computed: {
+    achievementsCount() {
+      let ghostTrophy = this.achievements.length;
+      return ghostTrophy;
+    },
+  },
+  methods: {
+    changeTrophyImage(achievement) {
+      if (
+        achievement.trophyImage === "/src/assets/images/trophies/trophy.png"
+      ) {
+        achievement.trophyImage = "/src/assets/images/trophies/trophy (3).png";
+        this.trophyCount--;
+        this.ghostTrophy++;
+      } else {
+        achievement.trophyImage = "/src/assets/images/trophies/trophy.png";
+        this.trophyCount++;
+        this.ghostTrophy--;
+      }
+    },
   },
   mounted() {
     const storedGames = localStorage.getItem("selectedGames");
@@ -12,7 +35,11 @@ export default {
       const selectedGames = JSON.parse(storedGames);
       if (selectedGames.length > 0) {
         const selectedAchievements = selectedGames[0].Achievements;
-        this.achievements = selectedAchievements;
+        this.achievements = selectedAchievements.map((achievement) => ({
+          ...achievement,
+          trophyImage: "/src/assets/images/trophies/trophy (3).png",
+        }));
+        this.ghostTrophy = this.achievements.length; // Asignar el valor de `achievements.length` a `ghostTrophy`
       }
     }
   },
@@ -24,12 +51,10 @@ export default {
     <div class="personalAchievements_container">
       <h1>Logros Personales</h1>
       <div class="trophy">
-        <img src="/src/assets/images/trophies/trophy (2).png" alt="" />
-        <h2>0</h2>
         <img src="/src/assets/images/trophies/trophy.png" alt="" />
-        <h2>0</h2>
+        <h2>{{ trophyCount }}</h2>
         <img src="/src/assets/images/trophies/trophy (3).png" alt="" />
-        <h2>0</h2>
+        <h2>{{ ghostTrophy }}</h2>
       </div>
     </div>
   </div>
@@ -48,7 +73,9 @@ export default {
       <h3>{{ achievement.description }}</h3>
     </div>
     <div class="trophy_container">
-      <img src="/src/assets/images/trophies/trophy (3).png" alt="" />
+      <button class="trophy_button" @click="changeTrophyImage(achievement)">
+        <img :src="achievement.trophyImage" alt="" />
+      </button>
     </div>
   </div>
 </template>
@@ -67,21 +94,23 @@ export default {
   justify-content: center;
   align-items: center;
   justify-content: space-between;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-right: 10px;
+  margin-left: 50px;
+  margin-right: 40px;
+  padding-right: 20px;
   color: #fff;
 }
 .achivementsList_container {
   display: flex;
   justify-content: space-between;
   background-color: #2ca243;
-  height: 8vh;
+  height: 9vh;
   margin: 15px;
 }
 
 .text_container {
-  margin-right: 75px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 90px;
 }
 
 .achivementsList_container h1 {
@@ -98,6 +127,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.trophy_button {
+  background-color: #2ca243ed;
+  width: 100%;
+  border: none;
 }
 
 .achievements_img {
