@@ -2,9 +2,8 @@
 export default {
   data() {
     return {
+      selectedGames: null,
       achievements: [],
-      trophyCount: 0,
-      ghostTrophy: 0,
     };
   },
   computed: {
@@ -15,46 +14,54 @@ export default {
   },
   methods: {
     changeTrophyImage(achievement) {
-      if (
-        achievement.trophyImage === "/src/assets/images/trophies/trophy.png"
-      ) {
-        achievement.trophyImage = "/src/assets/images/trophies/trophy (3).png";
-        this.trophyCount--;
-        this.ghostTrophy++;
-      } else {
+      console.log(achievement.trophy);
+      if (achievement.trophy == false) {
         achievement.trophyImage = "/src/assets/images/trophies/trophy.png";
-        this.trophyCount++;
-        this.ghostTrophy--;
+        this.selectedGames.trophyCount++;
+        this.selectedGames.ghostTrophy--;
+        achievement.trophy = true;
+      } else {
+        achievement.trophyImage = "src/assets/images/trophies/trophy (3).png";
+        this.selectedGames.trophyCount--;
+        this.selectedGames.ghostTrophy++;
+        achievement.trophy = false;
       }
+      this.saveSelectedGames();
+    },
+    saveSelectedGames() {
+      localStorage.setItem(
+        "selectedGames",
+        JSON.stringify([this.selectedGames])
+      );
     },
   },
   mounted() {
     const storedGames = localStorage.getItem("selectedGames");
-    console.log(storedGames);
     if (storedGames) {
-      const selectedGames = JSON.parse(storedGames);
-      if (selectedGames.length > 0) {
-        const selectedAchievements = selectedGames[0].Achievements;
+      const parsedGames = JSON.parse(storedGames);
+      if (parsedGames.length > 0) {
+        this.selectedGames = parsedGames[0];
+        const selectedAchievements = this.selectedGames.Achievements;
         this.achievements = selectedAchievements.map((achievement) => ({
           ...achievement,
           trophyImage: "/src/assets/images/trophies/trophy (3).png",
         }));
-        this.ghostTrophy = this.achievements.length; // Asignar el valor de `achievements.length` a `ghostTrophy`
+        this.ghostTrophy = this.achievements.length;
       }
     }
   },
 };
 </script>
 <template>
-  <div class="achievementsMainBox_container">
-    <img class="game_img" src="/src/assets/images/games/AoE.png" alt="" />
+  <div v-if="selectedGames" class="achievementsMainBox_container">
+    <img class="game_img" :src="selectedGames.img" alt="" />
     <div class="personalAchievements_container">
       <h1>Logros Personales</h1>
       <div class="trophy">
         <img src="/src/assets/images/trophies/trophy.png" alt="" />
-        <h2>{{ trophyCount }}</h2>
+        <h2>{{ selectedGames.trophyCount }}</h2>
         <img src="/src/assets/images/trophies/trophy (3).png" alt="" />
-        <h2>{{ ghostTrophy }}</h2>
+        <h2>{{ selectedGames.ghostTrophy }}</h2>
       </div>
     </div>
   </div>
